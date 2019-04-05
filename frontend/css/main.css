@@ -32,6 +32,10 @@ body{
     padding:0px;
 }
 
+input{
+    border:0px;
+}
+
 .contentarea{
     padding:1em;
     padding-left:5em;
