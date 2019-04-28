@@ -11,7 +11,7 @@
                 for($i = 0; $i<3; $i++){
                     echo 
                     "<div class='bnsannouncement'>
-                    <div class='firstline'><span class='title'> Title </span> - <span class='date'> 00.00.0000 </span></div>
+                    <div class='firstline'><span class='title'> Title </span> - <span class='date'> 00.00.0000 </span> - <span class='email'> email </span></div>
                     <span class='category'>Category</span>
                     <div class='description'>Description</div>
                     </div>";
