@@ -34,9 +34,17 @@ func connectWithCreateUser() {
 	fmt.Printf("DEBUG: Connecting to db with create user.")
 	connString := fmt.Sprintf("server=%s;user id=%s;password=%s;port=%d;database=%s",
 		dbServer, dbCreateUser, dbCreateUserSecret, database)
-
+	var err error
+	db, err = sql.Open("sqlserver", connString)
+	if err != nil {
+		log.Fatal("Error creating connection pool: ", err.Error())
+	}
 }
 
 func selectAnnouncements() {
 	connectWithViewUser()
+}
+
+func insertAnnouncement() {
+	connectWithCreateUser()
 }
