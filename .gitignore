@@ -1,3 +1,6 @@
+# Ignoring all config files
+*.cfg
+
 # Binaries for programs and plugins
 *.exe
 *.exe~

@@ -18,5 +18,5 @@ func main() {
 
 	router := InitRouter()
 	fmt.Println("Http server starting up.")
-	log.Fatal(http.ListenAndServe(":443", router))
+	log.Fatal(http.ListenAndServe(":5050", router))
 }
