@@ -1,6 +1,11 @@
 # Ignoring all config files
 *.cfg
 
+!src/
+/src/*
+/src/*/
+!/src/main
+
 # Binaries for programs and plugins
 *.exe
 *.exe~

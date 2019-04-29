@@ -1,0 +1,137 @@
+#MenuBar{
+    width:calc(100% + 1px);
+    margin:0px;
+    background-image: linear-gradient(#3a3a3a, #3a3a3a, #3a3a3a, #232323);
+    background-color:#3a3a3a;
+    box-sizing:border-box;
+    text-align:center;
+}
+
+#MenuBar>h2{
+    position: absolute;
+    left:1em;
+    margin:0;
+    color:white;
+    text-decoration:underline;
+}
+
+.menubutton{
+    background-image: linear-gradient(#232323, #232323,#303030);
+    background-color:#232323;
+    margin:0px;
+    box-sizing:border-box;
+    display:inline-block;
+    letter-spacing: 1px;
+    height:2.5em;
+    width:8em;
+    color:white;
+    cursor:pointer;
+    padding-top:0.5em;
+    font-family: 'Oswald', sans-serif;
+}
+
+.menubutton a{
+    color:white;
+    text-decoration:none;
+    font-weight:bold;
+    height:100%;
+}
+
+.menubutton:hover{
+    background-image: none;
+    background-color:#303030;
+}
+
+body{
+    margin:0px;
+    padding:0px;
+    background-image:url("media/background.png");
+    background-size: 1000px 1000px;
+    overflow-x:hidden;
+}
+
+h1,h2,h3,h4{
+    font-family: 'Oswald', sans-serif;
+    text-decoration:underline;
+}
+
+div{
+    font-family: 'Raleway', sans-serif;
+}
+
+input{
+    border:0px;
+}
+
+.contentarea{
+    padding:1em;
+    padding-left:5em;
+    padding-right:5em;
+}
+
+.contentarea>h2{
+    text-transform: uppercase;
+}
+
+.bnsannouncement{
+    background-color:white;
+    width:100%;
+    border-style: groove;
+    border-width: 0px 5px 5px 2px;
+    border-radius: 0px 10px 10px 0px;
+    padding:5px;
+    background-image: linear-gradient(white,white,white,white,white,white,#f2f2f2);
+}
+
+.firstline{
+    width:100%;
+    border-style: groove;
+    border-width: 0px 0px 2px 0px;
+    margin-bottom:10px;
+}
+
+.category{
+    width:100%;
+    border-style: groove;
+    border-width: 0px 0px 2px 0px;
+    padding-bottom:2px;
+}
+
+.description{
+    padding-top:12px;
+}
+
+#ErrorAnnouncement{
+    color:red;
+}
+
+input[type=submit] {
+    background-image: linear-gradient(#232323, #232323,#303030);
+    background-color:#232323;
+    margin:0px;
+    box-sizing:border-box;
+    display:inline-block;
+    letter-spacing: 1px;
+    height:2em;
+    width:4em;
+    color:white;
+    cursor:pointer;
+    font-family: 'Oswald', sans-serif;
+}
+
+input[type=submit]:hover {
+    background-image: none;
+    background-color:#303030;
+}
+
+@media only screen and (max-width: 600px) {
+    #MenuBar>h2{
+        display:none;
+    }
+
+    .contentarea{
+        padding:1em;
+        padding-left:2em;
+        padding-right:2em;
+    }
+  }

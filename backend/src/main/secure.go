@@ -43,13 +43,11 @@ func decrypt(cipherText string, key string) string {
 	keyBytes := []byte(key)
 	ciph, err := aes.NewCipher(keyBytes)
 	if err != nil {
-		fmt.Printf("DEBUG: Error while decrypting: %s with: %s\n", cipherText, key)
 		panic(err)
 	}
 
 	gcm, err := cipher.NewGCM(ciph)
 	if err != nil {
-		fmt.Printf("DEBUG: Error while entering Galois/Counter Mode.\n")
 		panic(err)
 	}
 
@@ -57,10 +55,8 @@ func decrypt(cipherText string, key string) string {
 	nonce, toDecrypt := toDecrypt[:nonceSize], toDecrypt[nonceSize:]
 	decrypted, err := gcm.Open(nil, nonce, toDecrypt, nil)
 	if err != nil {
-		fmt.Println("DEBUG: Error while decrypting.")
 		panic(err)
 	}
-	fmt.Printf("DEBUG: decryption complete: %s\n", string(decrypted))
 	return string(decrypted)
 }
 
@@ -68,13 +64,11 @@ func decryptCfgs(cfgSecret string) (string, string) {
 	selectSecret, err := ioutil.ReadFile("select.cfg")
 	selectSecretString := decrypt(string(selectSecret), cfgSecret)
 	if err != nil {
-		fmt.Println("DEBUG: Error while reading cfg")
 		panic(err)
 	}
 	insertSecret, err := ioutil.ReadFile("insert.cfg")
 	insertSecretString := decrypt(string(insertSecret), cfgSecret)
 	if err != nil {
-		fmt.Println("DEBUG: Error while reading cfg")
 		panic(err)
 	}
 	return selectSecretString, insertSecretString

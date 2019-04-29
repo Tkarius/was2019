@@ -20,6 +20,9 @@ func main() {
 	selectAnnouncements()
 
 	router := InitRouter()
+	//fs := http.FileServer(http.Dir("./assets/"))
+	//http.Handle("/static/", http.StripPrefix("/static/", fs))
+
 	fmt.Println("Http server starting up.")
 	log.Fatal(http.ListenAndServe(":8000", router))
 }

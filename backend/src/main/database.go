@@ -45,9 +45,6 @@ func selectAnnouncements() {
 		// VALIDATE STUFFI!
 		fmt.Printf("name: %s email: %s announcement: %s category: %s expiration date: %s\n", name, email, announcement, category, expirationDate)
 	}
-
-	fmt.Printf("DEBUG: At end of select user.")
-
 }
 
 func insertAnnouncement() {
