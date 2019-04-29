@@ -7,9 +7,11 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+
+	_ "github.com/denisenkom/go-mssqldb"
 )
 
-func encrypt(plainText string, key string) []byte {
+func encrypt(plainText string, key string) {
 	toEncrypt := []byte(plainText)
 	keyBytes := []byte(key)
 	ciph, err := aes.NewCipher(keyBytes)
@@ -31,8 +33,8 @@ func encrypt(plainText string, key string) []byte {
 	if _, err = io.ReadFull(rand.Reader, nonce); err != nil {
 		fmt.Println("DEBUG: Error while populating nonce with randomized sequence.")
 	}
-
-	return gcm.Seal(nonce, nonce, toEncrypt, nil)
+	err = ioutil.WriteFile("select.cfg", gcm.Seal(nonce, nonce, toEncrypt, nil), 0444)
+	//return gcm.Seal(nonce, nonce, toEncrypt, nil)
 
 }
 
@@ -62,11 +64,18 @@ func decrypt(cipherText string, key string) string {
 	return string(decrypted)
 }
 
-func decryptCfgs(cfgSecret string) string {
-	decryptedCfg, err := ioutil.ReadFile("was-server.cfg")
+func decryptCfgs(cfgSecret string) (string, string) {
+	selectSecret, err := ioutil.ReadFile("select.cfg")
+	selectSecretString := decrypt(string(selectSecret), cfgSecret)
 	if err != nil {
 		fmt.Println("DEBUG: Error while reading cfg")
 		panic(err)
 	}
-	return decrypt(string(decryptedCfg), cfgSecret)
+	insertSecret, err := ioutil.ReadFile("insert.cfg")
+	insertSecretString := decrypt(string(insertSecret), cfgSecret)
+	if err != nil {
+		fmt.Println("DEBUG: Error while reading cfg")
+		panic(err)
+	}
+	return selectSecretString, insertSecretString
 }
