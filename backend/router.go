@@ -31,6 +31,10 @@ func InitRouter() *mux.Router {
 				Handler(handler)
 		}
 	}
+
+	fs := http.FileServer(http.Dir("static/"))
+	http.Handle("/static/", http.StripPrefix("/static", fs))
+
 	return router
 }
 

@@ -42,7 +42,7 @@ func selectAnnouncements() {
 			fmt.Println("Something bad happened while scanning db results.")
 			fmt.Println(err)
 		}
-
+		// VALIDATE STUFFI!
 		fmt.Printf("name: %s email: %s announcement: %s category: %s expiration date: %s\n", name, email, announcement, category, expirationDate)
 	}
 
@@ -52,7 +52,7 @@ func selectAnnouncements() {
 
 func insertAnnouncement() {
 	fmt.Printf("DEBUG: Connecting to db with create user.")
-
+	// VALIDATE STUFFI!
 	var err error
 	db, err = sql.Open("sqlserver", env.insertUserSecret)
 	if err != nil {

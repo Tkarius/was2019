@@ -23,7 +23,7 @@ var routes = Routes{
 	Route{
 		"CreateAnnouncement",
 		"POST",
-		"",
+		"/create",
 		true,
 		createAnnouncement,
 	},
