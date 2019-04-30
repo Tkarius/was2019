@@ -66,3 +66,7 @@ input{
 .description{
     padding-top:12px;
 }
+
+#ErrorAnnouncement{
+    color:red;
+}
