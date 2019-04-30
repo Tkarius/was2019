@@ -1,31 +1,30 @@
 package main
 
-import "net/http"
-import "fmt"
-import "html/template"
+import (
+	"html/template"
+	"net/http"
+)
 
 func listAnnouncements(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("Go Esteri, Go!")
 	announcements := selectAnnouncements()
 
 	for _, announcement := range announcements {
-		temppi := template.New("jotain")
-		temppi, _ = temppi.Parse("{{.}}<div class='bnsannouncement'><div class='firstline'><span class='title'>{{ .Title }}</span> - <span class='date'> {{ .Date }} </span> - {{ .Useremail }} - {{ .Username }}</div><span class='category'>{{ .Category }}</span><div class='description'>{{ .Announcement }}</div></div>")
-		/*fmt.Println("Name")
-		fmt.Println(announcement.Username)
-		fmt.Println("Email")
-		fmt.Println(announcement.Useremail)
-		fmt.Println("Category:")
-		fmt.Println(announcement.Category)
-		fmt.Println("Announcement")
-		fmt.Println(announcement.Announcement)
-		fmt.Println("Expiration date:")
-		fmt.Println(announcement.ExpirationDate)*/
-		temppi.Execute(w, announcement)
+		if announcement.Announcement != "" {
+			temppi := template.New("jotain")
+			temppi, _ = temppi.Parse("Category: {{ .Category }} \nName: {{ .Username }} \nEmail: {{ .Useremail }}\nAnnouncement: {{ .Announcement }}\nExpiration date: {{ .ExpirationDate }}\n- - -\n\n")
+
+			temppi.Execute(w, announcement)
+		}
 	}
 
 }
 
 func createAnnouncement(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("Go Esteri, Go!")
+	var newAnnouncement Announcement
+	newAnnouncement.Announcement = r.FormValue("description")
+	newAnnouncement.Category = r.FormValue("category")
+	newAnnouncement.ExpirationDate = r.FormValue("date")
+	newAnnouncement.Useremail = r.FormValue("email")
+	newAnnouncement.Username = r.FormValue("name")
+	insertAnnouncement(newAnnouncement)
 }

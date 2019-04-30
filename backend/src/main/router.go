@@ -16,20 +16,11 @@ func InitRouter() *mux.Router {
 		handler = route.HandlerFunc
 		handler = Logger(handler, route.Name)
 
-		if route.Query == true {
-			router.
-				Methods(route.Method).
-				Path(route.Pattern).
-				Name(route.Name).
-				Queries("start", "{start:[0-9]+}", "end", "{end:[0-9]+}").
-				Handler(handler)
-		} else {
-			router.
-				Methods(route.Method).
-				Path(route.Pattern).
-				Name(route.Name).
-				Handler(handler)
-		}
+		router.
+			Methods(route.Method).
+			Path(route.Pattern).
+			Name(route.Name).
+			Handler(handler)
 	}
 
 	router.PathPrefix("/static/").

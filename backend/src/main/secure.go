@@ -4,7 +4,6 @@ import (
 	"crypto/aes"
 	"crypto/cipher"
 	"crypto/rand"
-	"fmt"
 	"io"
 	"io/ioutil"
 
@@ -17,25 +16,21 @@ func encrypt(plainText string, key string) {
 	ciph, err := aes.NewCipher(keyBytes)
 
 	if err != nil {
-		fmt.Printf("DEBUG: Error while encrypting: %s with: %s\n", plainText, key)
-		fmt.Println(err)
+		panic(err)
 	}
 
 	gcm, err := cipher.NewGCM(ciph)
 
 	if err != nil {
-		fmt.Println("DEBUG: Error while entering Galois/Counter Mode.")
-		fmt.Println(err)
+		panic(err)
 	}
 
 	// create a nonce and populate it with cryptographically randomized sequence.
 	nonce := make([]byte, gcm.NonceSize())
 	if _, err = io.ReadFull(rand.Reader, nonce); err != nil {
-		fmt.Println("DEBUG: Error while populating nonce with randomized sequence.")
+		panic(err)
 	}
-	err = ioutil.WriteFile("select.cfg", gcm.Seal(nonce, nonce, toEncrypt, nil), 0444)
-	//return gcm.Seal(nonce, nonce, toEncrypt, nil)
-
+	err = ioutil.WriteFile("non_existant_file.cfg", gcm.Seal(nonce, nonce, toEncrypt, nil), 0444)
 }
 
 func decrypt(cipherText string, key string) string {

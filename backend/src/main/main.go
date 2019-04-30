@@ -17,8 +17,8 @@ func main() {
 	cfgSecret = strings.Replace(cfgSecret, "\n", "", -1)
 	env.selectUserSecret, env.insertUserSecret = decryptCfgs(cfgSecret)
 
-	insertAnnouncement()
-	selectAnnouncements()
+	//insertAnnouncement()
+	//selectAnnouncements()
 
 	router := InitRouter()
 	//fs := http.FileServer(http.Dir("./assets/"))

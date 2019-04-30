@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	"strconv"
 	"time"
 )
 
@@ -22,19 +23,16 @@ type Announcement struct {
 var db *sql.DB
 
 func selectAnnouncements() []Announcement {
-	fmt.Printf("DEBUG: Connecting to db with view user.")
-
 	var err error
 	db, err = sql.Open("sqlserver", env.selectUserSecret)
 	if err != nil {
-		log.Fatal("Error creating connection pool: ", err.Error())
+		panic(err)
 	}
 
 	ctx := context.Background()
 	err = db.PingContext(ctx)
 	if err != nil {
-		fmt.Println("DEBUG: Error with db connection")
-		fmt.Println(err)
+		panic(err)
 	}
 
 	rows, err := db.QueryContext(ctx, "was_groupwork.SelectBusinessAnnouncements")
@@ -44,7 +42,7 @@ func selectAnnouncements() []Announcement {
 	defer rows.Close()
 	var name, email, announcement, category string
 	var expirationDate string
-	announcements := make([]Announcement, 20)
+	announcements := make([]Announcement, 50)
 	var announceIndex int
 	announceIndex = 0
 
@@ -54,7 +52,6 @@ func selectAnnouncements() []Announcement {
 			fmt.Println(err)
 		}
 		// VALIDATE STUFFI!
-		fmt.Printf("name: %s email: %s announcement: %s category: %s expiration date: %s\n", name, email, announcement, category, expirationDate)
 		announcements[announceIndex].Category = category
 		announcements[announceIndex].Announcement = announcement
 		announcements[announceIndex].Username = name
@@ -65,7 +62,7 @@ func selectAnnouncements() []Announcement {
 	return announcements
 }
 
-func insertAnnouncement() {
+func insertAnnouncement(toInsert Announcement) {
 	// VALIDATE STUFFI!
 	var err error
 	db, err = sql.Open("sqlserver", env.insertUserSecret)
@@ -76,22 +73,20 @@ func insertAnnouncement() {
 	ctx := context.Background()
 	err = db.PingContext(ctx)
 	if err != nil {
-		fmt.Println("DEBUG: Error with db connection")
-		fmt.Println(err)
+		panic(err)
 	}
 
-	timestamp := time.Now()
-	timestamp.Add(time.Hour * 3)
+	parsedTime, _ := strconv.ParseInt(toInsert.ExpirationDate, 10, 64)
+	timeStamp := time.Unix(parsedTime/1000, 0)
 
 	_, err = db.ExecContext(ctx, "was_groupwork.CreateBusinessAnnouncement",
-		sql.Named("category", "buying"),
-		sql.Named("announcement", "haluisin kovasti ostaa jotain"),
-		sql.Named("username", "esterihanse"),
-		sql.Named("useremail", "esteri@testeri.fi"),
-		sql.Named("expiration_date", timestamp),
+		sql.Named("category", toInsert.Category),
+		sql.Named("announcement", toInsert.Announcement),
+		sql.Named("username", toInsert.Username),
+		sql.Named("useremail", toInsert.Useremail),
+		sql.Named("expiration_date", timeStamp),
 	)
 	if err != nil {
 		fmt.Println(err)
 	}
-
 }
