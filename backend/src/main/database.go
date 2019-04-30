@@ -8,11 +8,20 @@ import (
 	"time"
 )
 
+type Announcement struct {
+	Category       string
+	Announcement   string
+	Username       string
+	Useremail      string
+	ExpirationDate string
+	Title          string
+}
+
 // global :s Let's see if we need to leave it that way.
 // this is not exposed outside database.go.
 var db *sql.DB
 
-func selectAnnouncements() {
+func selectAnnouncements() []Announcement {
 	fmt.Printf("DEBUG: Connecting to db with view user.")
 
 	var err error
@@ -33,9 +42,11 @@ func selectAnnouncements() {
 		fmt.Println(err)
 	}
 	defer rows.Close()
-	// SELECT u.name, u.email, ba.announcement, ba.category, ba.expiration_date
 	var name, email, announcement, category string
 	var expirationDate string
+	announcements := make([]Announcement, 20)
+	var announceIndex int
+	announceIndex = 0
 
 	for rows.Next() {
 		if err := rows.Scan(&name, &email, &announcement, &category, &expirationDate); err != nil {
@@ -44,11 +55,17 @@ func selectAnnouncements() {
 		}
 		// VALIDATE STUFFI!
 		fmt.Printf("name: %s email: %s announcement: %s category: %s expiration date: %s\n", name, email, announcement, category, expirationDate)
+		announcements[announceIndex].Category = category
+		announcements[announceIndex].Announcement = announcement
+		announcements[announceIndex].Username = name
+		announcements[announceIndex].Useremail = email
+		announcements[announceIndex].ExpirationDate = expirationDate
+		announceIndex++
 	}
+	return announcements
 }
 
 func insertAnnouncement() {
-	fmt.Printf("DEBUG: Connecting to db with create user.")
 	// VALIDATE STUFFI!
 	var err error
 	db, err = sql.Open("sqlserver", env.insertUserSecret)
@@ -76,7 +93,5 @@ func insertAnnouncement() {
 	if err != nil {
 		fmt.Println(err)
 	}
-
-	fmt.Printf("DEBUG: At end of create user.")
 
 }
