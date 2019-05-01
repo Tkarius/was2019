@@ -17,6 +17,9 @@ server {
     location / {
         proxy_pass http://localhost:8000;
         include /etc/nginx/proxy_params;
+        limit_except POST GET {
+            deny all;
+        }
     }
 
 }
