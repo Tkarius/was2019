@@ -46,6 +46,8 @@ body{
     margin:0px;
     padding:0px;
     background-image:url("media/background.png");
+    background-size: 1000px 1000px;
+    overflow-x:hidden;
 }
 
 h1,h2,h3,h4{
@@ -67,6 +69,10 @@ input{
     padding-right:5em;
 }
 
+.contentarea>h2{
+    text-transform: uppercase;
+}
+
 .bnsannouncement{
     background-color:white;
     width:100%;
@@ -74,7 +80,6 @@ input{
     border-width: 0px 5px 5px 2px;
     border-radius: 0px 10px 10px 0px;
     padding:5px;
-    margin-bottom:5px;
     background-image: linear-gradient(white,white,white,white,white,white,#f2f2f2);
 }
 
@@ -114,8 +119,19 @@ input[type=submit] {
     font-family: 'Oswald', sans-serif;
 }
 
+input[type=submit]:hover {
+    background-image: none;
+    background-color:#303030;
+}
+
 @media only screen and (max-width: 600px) {
     #MenuBar>h2{
         display:none;
+    }
+
+    .contentarea{
+        padding:1em;
+        padding-left:2em;
+        padding-right:2em;
     }
   }
