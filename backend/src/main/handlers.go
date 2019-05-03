@@ -21,6 +21,7 @@ func listAnnouncements(w http.ResponseWriter, r *http.Request) {
 
 func createAnnouncement(w http.ResponseWriter, r *http.Request) {
 	var newAnnouncement Announcement
+	// validation!
 	newAnnouncement.Announcement = r.FormValue("description")
 	newAnnouncement.Category = r.FormValue("category")
 	newAnnouncement.ExpirationDate = r.FormValue("date")
